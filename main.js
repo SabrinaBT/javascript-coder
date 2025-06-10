@@ -1,56 +1,69 @@
-//variable: es un espacio de memoria reservado para almacenar info importante del programa.
-
-// //declaracion:
-// let cliente;
-// //asignacion de valores:
-// cliente: "Carlos";
-// console.log(cliente); //verifico por consola
-// //inicializar variables:
-// let edad = 37;
-// console.log(edad);
-// //const: es una variable cuyo valor no puede ser modificado una vez que ha sido asignado.
-// const nacimiento = 1987;
-// console.log(nacimiento);
 
 
-// //FUNCIONES
-// //Paso 1: Definir la función
-// function mostrarLibros() {
-//     console.log("Bienvenido a la biblioteca. ¡Estos son los libros disponibles!");
-// }
+const menu = ["cafe", "te", "criollo", "medialuna"];
+const precios = [350, 300, 200, 250];
+let total = 0;
 
-// //Paso 2: Llamar a la función
-// mostrarLibros(); // Muestra: Bienvenido a la biblioteca. ¡Estos son los libros disponibles!
+function darBienvenida() {
+    console.log("Bienvenido a mi cafetería");
+}
+darBienvenida();
 
-// //Paso 3: Añadir parámetros y argumentos a la función (lo q esta dentro del parentesis)
-// function buscarLibro(titulo) {
-//     console.log(`Buscando el libro: ${titulo}...`);
-// }
+function mostrarMenu(lista, precios) {
+    let mensaje = "Menú disponible:\n";
+    for (let i = 0; i < lista.length; i++) {
+        mensaje += `- ${lista[i]}: $${precios[i]}\n`;
+    }
+    alert(mensaje);
+    console.log(mensaje);
+}
 
-// buscarLibro("El Principito"); // Argumento al invocar la funcion
+function productoValido(nombre, lista) {
+    for (let i = 0; i < lista.length; i++) {
+        if (nombre == lista[i]) {
+            return i;
+        }
+    }
+    return -1;
+}
 
-// //Paso 4: Utilizar el retorno de la función
-// function calcularMulta(diasRetraso) {
-//     const multaPorDia = 0.50; // 50 centavos por día de retraso
-//     return diasRetraso * multaPorDia;
-// }
+function agregarAlTotal(indice, precios) {
+    total = total + precios[indice];
+}
 
-// let multa = calcularMulta(5);
-// console.log(`La multa total es: $${multa}`); // Muestra: La multa total es: $2.5
+let seguir = true;
+
+while (seguir) {
+    let opcion = prompt("Elija la opción ingresando el número correspondiente\n 1. Ver el menú\n 2. Hacer un pedido\n 3. Ver total a pagar y/o salir");
+
+    switch (opcion) {
+        case "1":
+            mostrarMenu(menu, precios);
+            break;
+
+        case "2":
+            let pedido = prompt("Ingrese el nombre del producto elegido, uno a la vez").toLowerCase();
+            let indice = productoValido(pedido, menu);
+
+            if (indice !== -1) {
+                agregarAlTotal(indice, precios);
+                alert("Producto agregado: " + menu[indice]);
+            } else {
+                alert("Ese producto no está en el menú.");
+            }
+            break;
+
+        case "3":
+            seguir = false;
+            break;
+
+        default:
+            alert("Opción no válida. Escribí 1, 2 o 3.");
+    }
+}
+
+alert("Gracias por tu visita. Total a pagar: $" + total);
+console.log("Total final: $" + total);
 
 
 
-// //Uso Avanzado: Parámetros Predeterminados
-// function devolverLibro(titulo, diasRetraso = 0) {
-//     const multa = diasRetraso * 0.50;
-//     const mensaje = diasRetraso > 0 
-//         ? `Devuelto con ${diasRetraso} días de retraso. Multa: $${multa}` 
-//         : "Devuelto a tiempo. No hay multa.";
-//     console.log(`Libro "${titulo}": ${mensaje}`);
-// }
-
-// devolverLibro("El Principito");
-// // Muestra: Libro "El Principito": Devuelto a tiempo. No hay multa.
-
-// devolverLibro("El Principito", 3);
-// // Muestra: Libro "El Principito": Devuelto con 3 días de retraso. Multa: $1.5.
