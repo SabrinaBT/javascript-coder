@@ -3,10 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/style.css">
     <script defer src="./js/main.js"></script>
-    <title>Sabrina Balestrieri</title>
+    <title>CafeBar</title>
 </head>
 <body>
-    <h1>JavaScript Primer Entrega</h1>
+    <header>
+        <a href="index.html">HOME</a>
+    </header>
+    <main>
+        <div id="miModal" class="modal">
+            <div class="modal-contenido">
+                <h2>Debe ser mayor de edad para ver el menú</h2>
+                <label>
+                    <p>Ingrese su edad</p>
+                    <input type="text" id="edad">
+                </label>
+                <p id="mensaje"></p>
+                <button id="btn-aceptar">Aceptar</button>
+            </div>
+        </div>
+            <h1 id="titulo-principal"> Cafe Bar </h1>
+            <button id="btn-pedidos"><a href="./pages/pedidos.html">HACÉ TU PEDIDO</a></button>
+    </main>
+    
 </body>
 </html>
