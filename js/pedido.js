@@ -61,7 +61,7 @@ document.getElementById("btn-enviarPedido").addEventListener("click", async () =
         setTimeout(() => {
             resolve({
                 "Transferencia MP": "Transferencia MP",
-                "Efectivo al mozo": "Efectivo al mozo",
+                "Efectivo": "Efectivo",
                 "Tarjeta": "Tarjeta"
             });
         }, 500);
@@ -84,8 +84,8 @@ document.getElementById("btn-enviarPedido").addEventListener("click", async () =
     if (metodoPago) {
         Swal.fire({
             icon: "success",
-            title: "Método de pago seleccionado. Acercarse al mostrador o hable con el mozo",
-            html: `<b>${metodoPago}</b>`,
+            title: "Su pedido ha sido enviado. Dudas? consulte al mozo.",
+            html: `<b>Su método de pago: ${metodoPago}</b>`,
             confirmButtonText: "Enviar"
         });
     }
