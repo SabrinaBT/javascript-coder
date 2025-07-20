@@ -1,0 +1,50 @@
+[
+    {
+        "id": 1, 
+        "nombre": "espresso", 
+        "precio": 2300,
+        "cantidad": 0
+    },
+    {
+        "id": 2, 
+        "nombre": "capuccino", 
+        "precio": 3250,
+        "cantidad": 0
+    },
+    {
+        "id": 3, 
+        "nombre": "chocolatada", 
+        "precio": 2500,
+        "cantidad": 0
+    },
+    {
+        "id": 4, 
+        "nombre": "americano", 
+        "precio": 2300,
+        "cantidad": 0
+    },
+    {
+        "id": 5, 
+        "nombre": "cafe con leche", 
+        "precio": 2800,
+        "cantidad": 0
+    },
+    {
+        "id": 6, 
+        "nombre": "frapuccino", 
+        "precio": 4000,
+        "cantidad": 0
+    },
+    {
+        "id": 7, 
+        "nombre": "matcha latte", 
+        "precio": 4990,
+        "cantidad": 0
+    },
+    {
+        "id": 8, 
+        "nombre": "mochaccino", 
+        "precio": 5500,
+        "cantidad": 0
+    }
+]

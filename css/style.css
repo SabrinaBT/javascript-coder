@@ -1,0 +1,215 @@
+/* ---------GENERAL---------- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+a{
+  text-decoration: none;
+  color: #3e2c23;
+}
+a:link {text-decoration: none;}
+a:hover {color: #f7c873;}
+
+body {
+  margin: 0;
+  background-image: url(../img/fondo.jpg);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+/* -------------NAVBAR----------- */
+.navbar {
+  background-color: #3e2c23 !important;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  position: fixed;    
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 9999;    
+
+}
+
+.navbar-brand {
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+
+#logo {
+  font-family: 'Georgia', serif;
+  font-size: 1.7rem;
+  font-weight: bold;
+  color: #f7c873 !important; 
+  letter-spacing: 1px;
+  transition: transform 0.3s ease;
+}
+
+#logo:hover {
+  transform: scale(1.1);
+}
+
+#logo.encendido {
+  color: #855833;
+  transition: color 0.5s ease;
+}
+
+/*--------------- ENLACES DEL NAV -----------------*/
+.navbar .nav-link,
+.navbar-nav .nav-link {
+  color: #f1e5d0 !important; 
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  transition: color 0.3s, background 0.3s;
+  border-radius: 5px;
+}
+
+.navbar .nav-link:hover,
+.navbar-nav .nav-link:hover {
+  background-color: #f7c873; 
+  color: #3e2c23 !important; 
+}
+
+
+
+
+/* ----------------SECTION INDEX-------------- */
+li {
+  margin-top: 10px;
+}
+
+#sect-index {
+  padding-top: 100px;
+  height: 100vh;
+}
+
+#div-index {
+  background-color: rgba(0, 0, 0, 0.6); 
+  padding: 2rem;
+  border-radius: 10px; 
+}
+
+
+/* -------------------PAGES: contacto y nosotros --------------------- */
+#contacto {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent; 
+  padding-top: 100px; 
+  box-sizing: border-box;
+}
+
+.contacto-caja {
+  background-color: rgba(0, 0, 0, 0.7); 
+  padding: 2rem 3rem;
+  border-radius: 12px;
+  max-width: 600px;
+  width: 90%;
+  color: #fff;
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
+
+#nosotros {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 100px; 
+  background-color: transparent; 
+  box-sizing: border-box;
+}
+
+.nosotros-caja {
+  background-color: rgba(0, 0, 0, 0.7); 
+  padding: 2rem 3rem;
+  border-radius: 12px;
+  max-width: 700px;
+  width: 90%;
+  color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+}
+
+
+/* ----------------MENU-------------- */
+
+.container1 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.75);
+  padding: 1.5rem 2rem;
+  border-radius: 15px;
+  width: 100%;
+  box-sizing: border-box;
+  color: #fff;
+  margin: 100px auto 50px auto;
+}
+
+.card-body {
+  background-color: rgba(161, 105, 41, 0.75);
+  font-family: "Oooh Baby", cursive;
+}
+
+.card-text {
+  font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+.card-text, .card-title {
+  font-size: 2rem;
+}
+
+#btn-pedido {
+  margin-bottom: 15px;
+}
+
+button, span {
+  font-family: monospace;
+  margin: 5px;
+  padding: 5px 10px;
+  font-size: 1.2rem;
+}
+
+button{
+  background-color: #f7c873;
+  border: none;
+  color: #3e2c23;
+  font-weight: bold;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+button:hover {
+  background-color: #664622; 
+  color: #f7c873;
+  transform: scale(1.05);
+}
+
+
+/* --------------PEDIDO------------- */
+#order-section{
+  display: grid;
+  gap: 50px;
+}
+
+#btn-volverAlMenu {
+  margin-bottom: 50px;
+}
+
+/* --------------ALERT------------- */
+.swal2-radio {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+
+.swal2-radio input[type="radio"] {
+  transform: scale(1.2);
+  flex-shrink: 0;
+}

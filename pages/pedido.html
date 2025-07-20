@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script defer src="../js/pedido.js"></script>
+    <link rel="stylesheet" href="../css/style.css">
+    <title>El Buen Café - Tu pedido</title>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container">
+                <a id="logo" class="navbar-brand" href="../index.html">☕ El Buen Café</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="menu.html">Menú</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="nosotros.html">Nosotros</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="contacto.html">Contacto</a>
+                        </li>
+                    </ul> 
+                </div>
+            </div>
+        </nav>
+    </header>
+    <section class="container1">
+        <button id="btn-volverAlMenu"> <a href="menu.html">Volver al menú</a></button>
+        <section id="order-section"></section>
+        <button id="btn-enviarPedido">Enviar pedido</button>
+        <button id="btn-vaciarPedido">Vaciar pedido</button>
+    </section> 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html> 
