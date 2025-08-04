@@ -1,103 +1,155 @@
 let orderContainer = document.getElementById("order-section");
+let btnConfirmar = document.getElementById("btn-confirmarPedido");
 
 let orderStorage = JSON.parse(sessionStorage.getItem("orderProducts")) || [];
-
 let productosSeleccionados = orderStorage.filter(producto => producto.cantidad > 0);
 
-const btnEnviar = document.getElementById("btn-enviarPedido");
+renderPedido(productosSeleccionados);
 
-const productosFiltrados = productosSeleccionados.filter(producto => producto.cantidad > 0);
-
-if (!productosFiltrados[0]) {
-    btnEnviar.disabled = true;
-    btnEnviar.textContent = "Sin productos en el pedido";
-}
-
-
-function renderPedido(orderItems) {
+function renderPedido(productos) {
+    orderContainer.innerHTML = "";
     let total = 0;
-    orderItems.forEach(producto => {
-        let subtotal = producto.precio * producto.cantidad;
+
+    productos.forEach((producto) => {
+        const subtotal = producto.precio * producto.cantidad;
         total += subtotal;
         const card = document.createElement("div");
         card.innerHTML = `
                             <h3>${producto.nombre.toUpperCase()}</h3>
                             <p>Precio: $${producto.precio}</p>
-                            <p>Cantidad: ${producto.cantidad}</p>
-                            <p>Subtotal: $${subtotal}</p>
+                            <p>Cantidad: <span id="cantidad-${producto.id}">${producto.cantidad}</span></p>
+                            <p>Subtotal: $<span id="subtotal-${producto.id}">${subtotal}</span></p>
+                            <button class="minus-button" value="${producto.id}">−</button>
+                            <button class="plus-button" value="${producto.id}">+</button>
+                            <button class="btn-eliminar" value="${producto.id}">Eliminar</button>
                         `;
         orderContainer.appendChild(card);
     });
+
     const totalFinal = document.createElement("h2");
+    totalFinal.id = "totalFinal";
     totalFinal.textContent = `Total a pagar: $${total}`;
     orderContainer.appendChild(totalFinal);
+    BotonConfirmar(productos); 
+    agregarBotones();
 }
 
-renderPedido(productosSeleccionados);
+function agregarBotones() {
+    let pedido = JSON.parse(sessionStorage.getItem("orderProducts")) || [];
 
-
-document.getElementById("btn-enviarPedido").addEventListener("click", async () => {
-    const { value: formValues } = await Swal.fire({
-        title: "Completar datos",
-        html:   `
-                    <input id="swal-input1" class="swal2-input" placeholder="N° de mesa">
-                `,
-        focusConfirm: false,
-        preConfirm: () => {
-            return [
-                document.getElementById("swal-input1").value,
-            ];
-        }
-    });
-
-    if (formValues) {
-        Swal.fire({
-            title: "Datos ingresados",
-            text: `N° de mesa: ${formValues[0]}}`
+    document.querySelectorAll(".plus-button").forEach(btn => {
+        btn.addEventListener("click", () => {
+            const id = parseInt(btn.value);
+            const producto = pedido.find(producto => producto.id === id); 
+            if (producto && producto.cantidad < 5) {
+                producto.cantidad++;
+                actualizarPedido(pedido);
+            }
         });
-    }
-
-    const inputOptions = new Promise((resolve) => {
-        setTimeout(() => {
-            resolve({
-                "Transferencia MP": "Transferencia MP",
-                "Efectivo": "Efectivo",
-                "Tarjeta": "Tarjeta"
-            });
-        }, 500);
     });
 
-    const { value: metodoPago } = await Swal.fire({
-        title: "Selecciona método de pago",
-        input: "radio",
-        inputOptions,
-        customClass: {
-            input: 'mi-radio-personalizado'
-        },
+    document.querySelectorAll(".minus-button").forEach(btn => {
+        btn.addEventListener("click", () => {
+            const id = parseInt(btn.value);
+            pedido.forEach(producto => {
+                if (producto.id === id && producto.cantidad > 0) {
+                    producto.cantidad--;
+                }
+            });
+            pedido = pedido.filter(producto => producto.cantidad > 0);
+            actualizarPedido(pedido);
+        });
+    });
+
+    document.querySelectorAll(".btn-eliminar").forEach(btn => {
+        btn.addEventListener("click", () => {
+            const id = parseInt(btn.value);
+            pedido = pedido.filter(producto => producto.id !== id);
+            actualizarPedido(pedido);
+        });
+    });
+}
+
+function actualizarPedido(nuevoPedido) {
+    const productosFiltrados = nuevoPedido.filter(producto => producto.cantidad > 0);
+    sessionStorage.setItem("orderProducts", JSON.stringify(productosFiltrados));
+    renderPedido(productosFiltrados); 
+}
+
+function BotonConfirmar(pedido) {
+    let hayProductos = false;
+
+    for (const producto of pedido) {
+        hayProductos = true;
+        break;
+    }
+    if (hayProductos) {
+        btnConfirmar.disabled = false;
+        btnConfirmar.textContent = "Confirmar Pedido";
+    } else {
+        btnConfirmar.disabled = true;
+        btnConfirmar.textContent = "Sin productos en el pedido";
+    }
+}
+
+btnConfirmar.addEventListener("click", async () => {
+    const { value: numeroMesa } = await Swal.fire({
+        title: "N° de mesa",
+        input: "text",
+        inputLabel: "Ingresá tu número de mesa",
+        inputPlaceholder: "Ej: 5",
         inputValidator: (value) => {
-            if (!value) {
-                return "Tenes que elegir alguna opción!";
+            if (!value || isNaN(value) || parseInt(value) <= 0) {
+                return "Tenés que ingresar un número positivo";
             }
         }
     });
 
-    if (metodoPago) {
-        Swal.fire({
-            icon: "success",
-            title: "Su pedido ha sido enviado. Dudas? consulte al mozo.",
-            html: `<b>Su método de pago: ${metodoPago}</b>`,
-            confirmButtonText: "Enviar"
-        });
+    if (!numeroMesa) return;
+
+    const metodoPago = await Swal.fire({
+        title: "Selecciona un método de pago",
+        input: "radio",
+        inputOptions: {
+            "Transferencia MP": "Transferencia MP",
+            "Efectivo": "Efectivo",
+            "Tarjeta": "Tarjeta"
+        },
+        inputValidator: (value) => {
+            if (!value) return "Tenés que elegir alguna opción";
+        }
+    });
+
+    if (metodoPago.value) {
+        const pedido = JSON.parse(sessionStorage.getItem("orderProducts")) || [];
+        generarComprobantePedido(pedido, numeroMesa, metodoPago.value); 
+        sessionStorage.removeItem("orderProducts");
     }
 });
 
+document.getElementById("btn-vaciarPedido").addEventListener("click", () => {
+    sessionStorage.removeItem("orderProducts");
+    orderContainer.innerHTML = "";
+    BotonConfirmar([]); 
+});
 
-let vaciarPedido = document.getElementById("btn-vaciarPedido").addEventListener("click", () => {
-    if (orderContainer.firstChild !== null) {
-        sessionStorage.removeItem("orderProducts")
-        while (orderContainer.firstChild) {
-            orderContainer.removeChild(orderContainer.firstChild);
-        }
+function generarComprobantePedido(pedido, numeroMesa, metodoPago) {
+    let resumenHtml = "<ul>";
+    let total = 0;
+
+    for (const prod of pedido) {
+        const subtotal = prod.precio * prod.cantidad;
+        total += subtotal;
+        resumenHtml += `<li>${prod.nombre.toUpperCase()} x${prod.cantidad} = $${subtotal}</li>`;
     }
-})
+    resumenHtml += `</ul><h3>Total: $${total}</h3>`;
 
+    Swal.fire({
+        icon: "success",
+        title: "Pedido confirmado",
+        html: `<p><b>Mesa:</b> ${numeroMesa}</p>
+               <p><b>Método de pago:</b> ${metodoPago}</p>
+               ${resumenHtml}`,
+        confirmButtonText: "Aceptar y enviar a cocina"
+    });
+}
