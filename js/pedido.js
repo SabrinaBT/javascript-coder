@@ -32,6 +32,7 @@ function renderPedido(productos) {
     orderContainer.appendChild(totalFinal);
     BotonConfirmar(productos); 
     agregarBotones();
+    
 }
 
 function agregarBotones() {
@@ -133,23 +134,65 @@ document.getElementById("btn-vaciarPedido").addEventListener("click", () => {
     BotonConfirmar([]); 
 });
 
+
 function generarComprobantePedido(pedido, numeroMesa, metodoPago) {
     let resumenHtml = "<ul>";
+    let resumenTextoQR = `MESA: ${numeroMesa}\nPAGO: ${metodoPago}\nPEDIDO:\n`;
     let total = 0;
 
     for (const prod of pedido) {
         const subtotal = prod.precio * prod.cantidad;
         total += subtotal;
         resumenHtml += `<li>${prod.nombre.toUpperCase()} x${prod.cantidad} = $${subtotal}</li>`;
+        resumenTextoQR += `${prod.nombre} x${prod.cantidad} = $${subtotal}\n`;
     }
+
     resumenHtml += `</ul><h3>Total: $${total}</h3>`;
+    resumenTextoQR += `TOTAL: $${total}`;
+    
+   
 
     Swal.fire({
         icon: "success",
         title: "Pedido confirmado",
-        html: `<p><b>Mesa:</b> ${numeroMesa}</p>
-               <p><b>Método de pago:</b> ${metodoPago}</p>
-               ${resumenHtml}`,
-        confirmButtonText: "Aceptar y enviar a cocina"
+        html: `
+            <p><b>Mesa:</b> ${numeroMesa}</p>
+            <p><b>Método de pago:</b> ${metodoPago}</p>
+            ${resumenHtml}
+            <div id="qrcode" style="margin-left: 4.5rem; margin-bottom: 1rem;"></div>
+            <p>No cerrar hasta mostrar al mozo</p>
+        `,
+        didOpen: () => {
+            new QRCode(document.getElementById("qrcode"), {
+                text: resumenTextoQR,
+                width: 200,
+                height: 200
+            });
+        },
+        confirmButtonText: "Cerrar",
+        preConfirm: () => {
+            return new Promise((resolve) => {
+                Swal.fire({
+                    icon: "question",
+                    title: "¿Mostraste el ticket al mozo?",
+                    text: "Si confirmás, el pedido se finalizará.",
+                    showCancelButton: true,
+                    confirmButtonText: "Finalizar y confirmar",
+                    cancelButtonText: "Seguir mostrando el ticket"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        Swal.fire({
+                            icon: "success",
+                            title: "¡Gracias por elegirnos tenga buen día!",
+                            confirmButtonText: "✅"
+                        });
+                        resolve(); 
+                    } else {
+                        generarComprobantePedido(pedido, numeroMesa, metodoPago);
+                    }
+                });
+            });
+        }
     });
+
 }
