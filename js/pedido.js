@@ -159,7 +159,7 @@ function generarComprobantePedido(pedido, numeroMesa, metodoPago) {
             <p><b>Mesa:</b> ${numeroMesa}</p>
             <p><b>Método de pago:</b> ${metodoPago}</p>
             ${resumenHtml}
-            <div id="qrcode" style="margin-left: 4.5rem; margin-bottom: 1rem;"></div>
+            <div id="qrcode"></div>
             <p>No cerrar hasta que se escanee el QR por mozo/a</p>
         `,
         didOpen: () => {

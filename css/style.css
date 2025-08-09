@@ -200,6 +200,12 @@ button:hover {
   margin-bottom: 50px;
 }
 
+#qrcode {
+  margin-left: 50px;
+  margin-bottom: 15px;
+  margin-top: 15px;
+}
+
 /* --------------ALERT------------- */
 .swal2-radio {
   display: flex;
