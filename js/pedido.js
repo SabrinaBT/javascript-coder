@@ -143,7 +143,7 @@ function generarComprobantePedido(pedido, numeroMesa, metodoPago) {
     for (const prod of pedido) {
         const subtotal = prod.precio * prod.cantidad;
         total += subtotal;
-        resumenHtml += `<li>${prod.nombre.toUpperCase()} x${prod.cantidad} = $${subtotal}</li>`;
+        resumenHtml += `<li style="list-style: none ;">${prod.nombre.toUpperCase()} x${prod.cantidad} = $${subtotal}</li>`;
         resumenTextoQR += `${prod.nombre} x${prod.cantidad} = $${subtotal}\n`;
     }
 
@@ -160,7 +160,7 @@ function generarComprobantePedido(pedido, numeroMesa, metodoPago) {
             <p><b>Método de pago:</b> ${metodoPago}</p>
             ${resumenHtml}
             <div id="qrcode" style="margin-left: 4.5rem; margin-bottom: 1rem;"></div>
-            <p>No cerrar hasta mostrar al mozo</p>
+            <p>No cerrar hasta que se escanee el QR por mozo/a</p>
         `,
         didOpen: () => {
             new QRCode(document.getElementById("qrcode"), {

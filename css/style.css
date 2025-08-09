@@ -78,6 +78,7 @@ body {
 /* ----------------SECTION INDEX-------------- */
 li {
   margin-top: 10px;
+  list-style: none;
 }
 
 #sect-index {
